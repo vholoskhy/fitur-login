@@ -1,9 +1,14 @@
-import React from "react";
+"use client";
+
+import { useActionState } from "react";
+import Link from "next/link";
+import { signUpCredentials } from "@/lib/actions";
 
 const FormRegister = () => {
+  const [state, formAction] = useActionState(signUpCredentials, null);
   return (
     <div>
-      <form action="" className="space-y-6">
+      <form action={formAction} className="space-y-6">
         <div>
           <label
             htmlFor="name"
@@ -14,11 +19,13 @@ const FormRegister = () => {
           <input
             type="text"
             name="name"
-            placeholder="Jhon Doe"
+            placeholder="Vholoskhy"
             className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg w-full p-2.5"
           />
           <div aria-live="polite" aria-atomic="true">
-            <span className="text-red-500 text-sm mt-2">Message</span>
+            <span className="text-red-500 text-sm mt-2">
+              {state?.error?.name}
+            </span>
           </div>
         </div>
         <div>
@@ -31,11 +38,13 @@ const FormRegister = () => {
           <input
             type="email"
             name="email"
-            placeholder="john.doe@gmail.com"
+            placeholder="vholoskhy@gmail.com"
             className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg w-full p-2.5"
           />
           <div aria-live="polite" aria-atomic="true">
-            <span className="text-red-500 text-sm mt-2">Message</span>
+            <span className="text-red-500 text-sm mt-2">
+              {state?.error?.email}
+            </span>
           </div>
         </div>
         <div>
@@ -52,14 +61,18 @@ const FormRegister = () => {
             className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg w-full p-2.5"
           />
           <div aria-live="polite" aria-atomic="true">
-            <span className="text-red-500 text-sm mt-2">Message</span>
+            <span className="text-red-500 text-sm mt-2">
+              {state?.error?.password}
+            </span>
           </div>
         </div>
         <div>
           <label
             htmlFor="ConfirmPassword"
             className="block text-sm font-medium mb-2 text-gray-900  "
-          ></label>
+          >
+            comfirm password
+          </label>
           <input
             type="password"
             name="ConfirmPassword"
@@ -67,9 +80,25 @@ const FormRegister = () => {
             className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg w-full p-2.5"
           />
           <div aria-live="polite" aria-atomic="true">
-            <span className="text-red-500 text-sm mt-2">Message</span>
+            <span className="text-red-500 text-sm mt-2">
+              {state?.error?.confirmPassword}
+            </span>
           </div>
         </div>
+        <button
+          type="submit"
+          className="text-md w-full bg-[#3E5879] rounded-lg px-5 text-white py-2.5 text-center uppercase font-medium hover:bg-[#213555]"
+        >
+          Register
+        </button>
+        <p className="text-sm font-light text-gray-800 ">
+          already have an account ?
+          <Link href="/login">
+            <span className="font-medium pl-1 text-blue-500 hover:text-blue-800 ">
+              Sigh In
+            </span>
+          </Link>
+        </p>
       </form>
     </div>
   );
